@@ -26,7 +26,7 @@ for obj in logo:
 		h = data["imageHeight"]
 		w = data["imageWidth"]
 		for i in range(len(data["shapes"])):
-			ìf data["shapes"][i]["label"] == "marker":
+			if data["shapes"][i]["label"] == "marker":
 				points = data["shapes"][i]["points"]
 				x_coor = []
 				y_coor = []
