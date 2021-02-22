@@ -57,29 +57,34 @@ def show_img(idx, image_id, canvas2):
 def nextImage(event=None):
   global idx, image_id, canvas2
   label = entry1.get()
-  if len(label):
+  print(ls_json[idx])
+  if label != ls_json[idx]:
     json_file= ls_img[idx].split(".")[0]+".json"
     with open(json_file, 'w',encoding='utf-8') as f:
       res = {"label": label, "path": ls_img[idx]}
       ls_json[idx]= label
       json.dump(res, f, ensure_ascii=False)
-      entry1.delete(0, "end")
-      print("len(label)")
+      print(f"next {label}")
   idx+=1
+  entry1.delete(0, "end")
+  entry1.insert(0, ls_json[idx])
   show_img(idx, image_id, canvas2)
 
 def backImage():
   global idx, image_id, canvas2
   label = entry1.get()
-  if len(label):
+  print(ls_json[idx-1])
+  if label != ls_json[idx]:
     json_file= ls_img[idx].split(".")[0]+".json"
     with open(json_file, 'w',encoding='utf-8') as f:
       res = {"label": label, "path": ls_img[idx]}
       ls_json[idx]= label
       json.dump(res, f, ensure_ascii=False)   
-      entry1.delete(0, "end")
-      print("len(label)")
+      print(f"back: {label}")
+      
   idx-=1
+  entry1.delete(0, "end")
+  entry1.insert(0, ls_json[idx])
   show_img(idx, image_id, canvas2)
 
 root= tk.Tk()
@@ -98,6 +103,7 @@ label1.config(font=('helvetica', 10))
 canvas1.create_window(400, 25, window=label0)
 
 entry1 = tk.Entry(root, width=100) 
+entry1.insert(0,f'{ls_json[idx]}')
 canvas1.create_window(400, 140, window=entry1)
 
 root.bind('<Return>', nextImage)
@@ -126,6 +132,3 @@ image_id =canvas2.create_image(500,200, anchor="center", image=img)
 # show_img()
 
 root.mainloop()
-
-
-  
